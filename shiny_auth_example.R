@@ -1,7 +1,9 @@
 library(shiny)
 library(magrittr)
 
-.appv <- reactiveValues(logged_in = FALSE)
+.appv <- reactiveValues(
+  logged_in = FALSE
+)
 
 view <- fluidPage(
   h1("itchy ibex"),
