@@ -5,6 +5,11 @@ keys <- list(
   "8989" = "rabbit"
 )
 
+user_data <- list(
+  "dog" = iris[1:5, ],
+  "rabbit" = quakes[1:5, ]
+)
+
 .appv <- reactiveValues(
   username = "nobody"
 )
@@ -43,11 +48,7 @@ controller <- function(input, output, session){
   })
   
   output$main <- renderTable({
-    if(.appv$username == "rabbit"){
-      quakes[1:5, ]
-    } else {
-      iris[1:5, ]
-    }
+    user_data[[.appv$username]]
   })
 }
 
