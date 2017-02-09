@@ -1,5 +1,4 @@
 library(shiny)
-library(magrittr)
 
 secrets <- list(
   bird = "dog"
@@ -8,7 +7,7 @@ secrets <- list(
 login_panel <- wellPanel(
   textInput("username", "username"),
   passwordInput("password", "password"),
-  actionButton("in_and_out", "sign in"),
+  actionButton("sign_in", "sign in"),
   style = "width: 300px;"
 )
 
@@ -30,18 +29,22 @@ view <- fluidPage(
 )
 
 controller <- function(input, output){
-  observeEvent(input$in_and_out, {
+  observeEvent(input$sign_in, {
     print(input$username)
     if(check_login(input$username, input$password)){
-      .appv$logged_in %<>% ifelse(FALSE, TRUE)
+      .appv$logged_in <- TRUE
     }
+  })
+  
+  observeEvent(input$sign_out, {
+    .appv$logged_in <- FALSE
   })
   
   output$secret <- renderUI({
     if(.appv$logged_in){
       list(
         pre(sprintf("Hi %s, welcome to the machine!", input$username)),
-        actionButton("in_and_out", "sign out"),
+        actionButton("sign_out", "sign out"),
         tableOutput("main")
       )
     } else{
