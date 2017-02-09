@@ -4,12 +4,22 @@ secrets <- list(
   bird = "dog"
 )
 
-login_panel <- wellPanel(
-  textInput("username", "username"),
-  passwordInput("password", "password"),
-  actionButton("sign_in", "sign in"),
-  style = "width: 300px;"
-)
+login_panel <- function(){
+  wellPanel(
+    textInput("username", "username"),
+    passwordInput("password", "password"),
+    actionButton("sign_in", "sign in"),
+    style = "width: 300px;"
+  )
+}
+
+main_view <- function(username){
+  list(
+    pre(sprintf("Hi %s, welcome to the machine!", username)),
+    actionButton("sign_out", "sign out"),
+    tableOutput("main")
+  )
+}
 
 check_login <- function(username, password){
    if(username %in% names(secrets) && secrets[[username]] == password){
@@ -42,13 +52,9 @@ controller <- function(input, output){
   
   output$secret <- renderUI({
     if(.appv$logged_in){
-      list(
-        pre(sprintf("Hi %s, welcome to the machine!", input$username)),
-        actionButton("sign_out", "sign out"),
-        tableOutput("main")
-      )
+      main_view(input$username)
     } else{
-      login_panel
+      login_panel()
     }
   })
   
