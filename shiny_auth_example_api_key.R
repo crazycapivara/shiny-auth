@@ -25,9 +25,9 @@ check_key <- function(query){
   key <- query[["key"]]
   if(!is.null(key) && key %in% names(keys)){
     .appv$username <- keys[[key]]
-    return(TRUE)
+    return(main_view())
   }
-  FALSE
+  pre("Pass API key!")
 }
 
 view <- fluidPage(
@@ -40,11 +40,7 @@ controller <- function(input, output, session){
   output$secret <- renderUI({
     query <- parseQueryString(session$clientData$url_search)
     print(query[["key"]])
-    if(check_key(query)){
-      main_view()  
-    } else {
-      pre("Pass API key!")
-    }
+    check_key(query)
   })
   
   output$main <- renderTable({
