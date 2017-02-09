@@ -9,6 +9,7 @@ login_panel <- function(){
     textInput("username", "username"),
     passwordInput("password", "password"),
     actionButton("sign_in", "sign in"),
+    uiOutput("message"),
     style = "width: 300px;"
   )
 }
@@ -43,17 +44,20 @@ controller <- function(input, output){
     print(input$username)
     if(check_login(input$username, input$password)){
       .appv$logged_in <- TRUE
+    } else {
+      output$message <- renderUI(pre("Something wrong."))
     }
   })
   
   observeEvent(input$sign_out, {
     .appv$logged_in <- FALSE
+    output$message <- renderUI("")
   })
   
   output$secret <- renderUI({
     if(.appv$logged_in){
       main_view(input$username)
-    } else{
+    } else {
       login_panel()
     }
   })
