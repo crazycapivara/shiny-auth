@@ -12,6 +12,13 @@ login_panel <- wellPanel(
   style = "width: 300px;"
 )
 
+check_login <- function(username, password){
+   if(username %in% names(secrets) && secrets[[username]] == password){
+     return(TRUE)
+   }
+  FALSE
+}
+
 .appv <- reactiveValues(
   logged_in = FALSE
 )
@@ -24,14 +31,16 @@ view <- fluidPage(
 
 controller <- function(input, output){
   observeEvent(input$in_and_out, {
-    print(.appv$logged_in)
-    .appv$logged_in %<>% ifelse(FALSE, TRUE)
+    print(input$username)
+    if(check_login(input$username, input$password)){
+      .appv$logged_in %<>% ifelse(FALSE, TRUE)
+    }
   })
   
   output$secret <- renderUI({
     if(.appv$logged_in){
       list(
-        h2(sprintf("Hi %s", input$username)),
+        pre(sprintf("Hi %s, welcome to the machine!", input$username)),
         actionButton("in_and_out", "sign out"),
         tableOutput("main")
       )
