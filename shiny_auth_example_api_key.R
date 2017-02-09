@@ -9,9 +9,9 @@ keys <- list(
   username = "nobody"
 )
 
-main_view <- function(username){
+main_view <- function(){
   list(
-    pre(sprintf("Hi %s, welcome to the machine!", username)),
+    pre(sprintf("Hi %s, welcome to the machine!", .appv$username)),
     tableOutput("main")
   )
 }
@@ -36,14 +36,18 @@ controller <- function(input, output, session){
     query <- parseQueryString(session$clientData$url_search)
     print(query[["key"]])
     if(check_key(query)){
-      main_view(.appv$username)  
+      main_view()  
     } else {
       pre("Pass API key!")
     }
   })
   
   output$main <- renderTable({
+    if(.appv$username == "rabbit"){
       quakes[1:5, ]
+    } else {
+      iris[1:5, ]
+    }
   })
 }
 
