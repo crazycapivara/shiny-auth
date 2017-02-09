@@ -53,7 +53,7 @@ controller <- function(input, output){
   output$secret <- renderUI({
     if(.appv$logged_in){
       main_view(input$username)
-    } else{
+    } else {
       login_panel()
     }
   })
