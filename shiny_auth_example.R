@@ -31,4 +31,4 @@ controller <- function(input, output){
   })
 }
 
-shinyApp(view, controller)
+shinyApp(view, controller, options = list(port = 5141))
