@@ -47,4 +47,4 @@ controller <- function(input, output, session){
   })
 }
 
-shinyApp(view, controller)
+shinyApp(view, controller, options = list(port = 5141))
