@@ -3,8 +3,8 @@ shiny-auth
 
 Examples on how to add authentification to `shiny` apps.
 
-run example apps
-----------------
+run apps
+--------
 
     # all apps will be ...
     Listening on http://127.0.0.1:5141
@@ -27,7 +27,7 @@ run example apps
     username = bird
     password = dog
 
-use `nginx` as proxy for `shiny-server`
----------------------------------------
+nginx meets shiny-server
+------------------------
 
 See config files for `nginx` and `shiny-server` in `nginx_meets_shiny-server` folder.
