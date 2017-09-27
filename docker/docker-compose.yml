@@ -1,0 +1,10 @@
+version: "2"
+services:
+  shiny:
+    image: rocker/shiny
+  nginx:
+    build: .
+    ports:
+      - "8015:8090"
+      - "8016:80"
+
